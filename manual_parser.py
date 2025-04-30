@@ -1,7 +1,7 @@
 import re
 
 token_patterns = [
-    (r'\bpackage\b', 'T_PACKAGE'),
+   
     (r'\bfunc\b', 'T_FUNC'),
     (r'\bint\b', 'T_INTTYPE'),
     (r'\breturn\b', 'T_RETURN'),
@@ -14,20 +14,45 @@ token_patterns = [
     (r'\btrue\b|\bfalse\b', 'T_BOOL'),
     (r'\d+', 'T_INT'),
     (r'".*?"', 'T_STRING'),
-    (r';', 'T_SEMICOLON'),
-    (r'=', 'T_ASSIGN'),
-    (r'\+', 'T_PLUS'),
-    (r'-', 'T_MINUS'),
-    (r'>', 'T_GT'),
-    (r'<', 'T_LT'),
     (r'\{', 'T_LCB'),
     (r'\}', 'T_RCB'),
     (r'\(', 'T_LPAREN'),
     (r'\)', 'T_RPAREN'),
     (r'[a-zA-Z_]\w*', 'T_ID'),
-    (r'[0-9]+', 'T_INT'),
-    (r'"[^"]*"', 'T_STRING'),
-    (r'[ \t\n]+', None),  # Ignore whitespace
+    (r'\n', 'T_NEWLINE'),
+    (r'[ \t]+', 'T_WHITESPACE'),
+    (r'//.*', 'T_COMMENT'),
+    (r'\+', 'T_PLUS'),
+    (r'\%', 'T_MOD'),
+    (r'-', 'T_MINUS'),
+    (r'\*', 'T_MULT'),
+    (r'/', 'T_DIV'),
+    (r'==', 'T_EQ'),
+    (r'!=', 'T_NEQ'),
+    (r'<', 'T_LT'),
+    (r'<=', 'T_LTE'),
+    (r'>', 'T_GT'),
+    (r'>=', 'T_GTE'),
+    (r'=', 'T_ASSIGN'),
+    (r';', 'T_SEMICOLON'),
+    (r',', 'T_COMMA'),
+    (r'!', 'T_NOT'),
+    (r'&&', 'T_AND'),
+    (r'\|\|', 'T_OR'),
+    (r'\.', 'T_DOT'),
+    (r':', 'T_COLON'),
+    (r'\[', 'T_LBRACKET'),
+    (r'\]', 'T_RBRACKET'),
+    (r'->', 'T_ARROW'),
+    (r'::', 'T_DOUBLECOLON'),
+    (r'@', 'T_AT'),
+    (r'\?', 'T_QUESTION'),
+    (r'\bnull\b', 'T_NULL'),
+    (r'\bthis\b', 'T_THIS'),
+    (r'\bsuper\b', 'T_SUPER'),
+    (r'\bvoid\b', 'T_VOID'),
+    
+
 ]
 
 class Parser:
@@ -124,11 +149,11 @@ def tokenize(code):
     while code:
         matched = False
         for pattern, token_type in token_patterns:
-            match = re.match(pattern, code)
+            regex = re.compile(pattern)
+            match = regex.match(code)
             if match:
-                if token_type:
-                    tokens.append((token_type, match.group()))
-                code = code[match.end():]
+                tokens.append((token_type, match.group()))
+                code = code[len(match.group()):]
                 matched = True
                 break
         if not matched:
@@ -139,7 +164,7 @@ if __name__ == "__main__":
     sample_code = """package Test;
 class Main {
   func main() int {
-    int x = 10;
+    int x =  10;
     if (x > 5) {
       x = x - 1;
     }

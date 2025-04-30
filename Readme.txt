@@ -6,3 +6,6 @@ gcc lex.yy.c decaf.tab.c decaf.tab.h -o decaf_parser -lfl   # Compiles the lexer
 Run the Lexer:
 ./decaf_parser < input.decaf     # Reads from a file
 ./decaf_parser                  # Reads from standard input
+
+
+
