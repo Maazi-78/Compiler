@@ -1,4 +1,4 @@
-from temp_parser import tokenize, Parser, print_parse_tree
+from manual_parser import tokenize, Parser, print_parse_tree
 
 def test_parser():
     """Test the parser with various Decaf programs"""
@@ -79,11 +79,11 @@ def run_test(code):
         print("Tokenizing...")
         tokens = tokenize(code)
         
-        # Print tokens (optional)
+        # Print tokens with indices for better debugging
         print("\nTokens:")
-        for token_type, token_value in tokens:
+        for i, (token_type, token_value) in enumerate(tokens):
             if token_type not in ('T_WHITESPACE', 'T_NEWLINE', 'T_COMMENT'):
-                print(f"{token_type}: {token_value}")
+                print(f"{i}: {token_type}: {token_value}")
         
         # Parse tokens
         print("\nParsing...")
@@ -96,10 +96,22 @@ def run_test(code):
         
     except SyntaxError as e:
         print(f"Syntax Error: {e}")
+        # Print the current position in tokens when error occurred
+        if 'parser' in locals():
+            pos = parser.position
+            print(f"Error occurred at position {pos}")
+            if pos < len(tokens):
+                print(f"Current token: {tokens[pos]}")
+            if pos > 0 and pos-1 < len(tokens):
+                print(f"Previous token: {tokens[pos-1]}")
+            if pos+1 < len(tokens):
+                print(f"Next token: {tokens[pos+1]}")
     except ValueError as e:
         print(f"Lexical Error: {e}")
     except Exception as e:
+        import traceback
         print(f"Error: {e}")
+        traceback.print_exc()
 
 if __name__ == "__main__":
     test_parser()

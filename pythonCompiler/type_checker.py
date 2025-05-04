@@ -788,16 +788,18 @@ if __name__ == "__main__":
     # test_implicit_conversion_chain()
     
     # You can also test with your parser's output
-    from temp_parser import Parser, tokenize
-    code = """float compute(float a, float b) {
-                return a + b;
-                }
-            float compute(float a, float b) {
-            return a + b;
-                }
-            int main() {
-            float result = compute(5, 6);
-                }"""
+    from manual_parser import Parser, tokenize
+    code = """package Test;
+class Main {
+  func main() int {
+    int x = 10;
+    if (x > 5) {
+      x = x - 1;
+    }
+    return x;
+  }
+}
+"""
     tokens = tokenize(code)
     parser = Parser(tokens)
     ast = parser.parse()
