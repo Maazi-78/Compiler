@@ -1,0 +1,6 @@
+package test5;
+func main() int {
+    if (objs[i].props[p][ReadInteger()].value) {
+        int a;
+    }
+}
