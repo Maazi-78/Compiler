@@ -1,7 +1,0 @@
-package test3;
-func some(string str) void {
-    int n;
-    bool b;
-
-    if (a == 0 && b) {}
-}

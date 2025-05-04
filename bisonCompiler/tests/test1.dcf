@@ -1,4 +1,0 @@
-package test1;
-int a;
-func some(int a, string str, bool b) void {}
-class Some extends SomeBase implements ISome, ISome2, ISome3 {}
